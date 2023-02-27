@@ -1,7 +1,4 @@
-// Denna fil ska innehålla er lösning till projektuppgiften.
-
-"use strict";
-/* Här under börjar du skriva din JavaScript-kod */
+"use strict"; //Strict mode
 
 /*Variabler*/
 const navEl = document.getElementById("mainnavlist");
@@ -20,7 +17,16 @@ window.addEventListener("load", function () {
     counterEl.value = 3;
 })
 
-//Fetch funktion för nav elementet
+/*Funktion för att skapa alternativ till kanaler att spela i musikspelaren*/
+function createOption(channel) {
+    //Skapa option element
+    let option = document.createElement("option");
+    option.setAttribute("id", channel.id); //Sätt id till medskickade kanalens id
+    option.textContent = channel.name; //Sätt innerhtml till kanalens namn
+    dropdownEl.appendChild(option); //Fäst till dropdown elementet
+}
+
+//Fetch funktion för nav elementet, visa dom olika kanalerna
 function getChannels() {
     fetch(channelUrl) //Hämta från url
         .then((res) => res.json()) //Sätt responsen till json
@@ -34,6 +40,7 @@ function getChannels() {
         }
         )
 }
+
 //Funktion för att skapa kanaler
 function createChannel(channel) {
     //Addera list element med anchor från dom medskickade kanalerna
@@ -54,15 +61,8 @@ function createChannel(channel) {
     li.addEventListener("click", getScheduledEpisodes);
     //Skriv ut till dom
     navEl.appendChild(li);
+}
 
-}
-function createOption(channel) {
-    //Skapa option element
-    let option = document.createElement("option");
-    option.setAttribute("id", channel.id); //Sätt id till medskickade kanalens id
-    option.textContent = channel.name; //Sätt innerhtml till kanalens namn
-    dropdownEl.appendChild(option); //Fäst till dropdown elementet
-}
 //Funktion för att få rätt id vid klick
 function channelId(id) {
     return `http://api.sr.se/api/v2/scheduledepisodes?channelid=${id}&size=100&format=json`
@@ -146,6 +146,7 @@ playerbuttonEl.addEventListener("click", playChannel);
 function play(id) {
     return `https://sverigesradio.se/topsy/direkt/${id}.mp3`
 }
+
 function playChannel() {
     //Skapa element och sätt option till valt program
     let option = dropdownEl[dropdownEl.selectedIndex];
