@@ -163,6 +163,4 @@ function playChannel() {
     //Fäst vid varandra
     audio.appendChild(source);
     playerEl.append(audio, span);
-    //
-    
 }
